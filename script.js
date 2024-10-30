@@ -1,3 +1,4 @@
+// CLASS BOOK 
 class Book {
     constructor(title, author, year, price) {
         this.title = title;
@@ -5,7 +6,7 @@ class Book {
         this.year = year;
         this.price = price;
     }
-    // function add book
+    // function add book HAS THE HTML CODE
     addBook() {
         return `
                 <td>${this.title}</td>
@@ -25,6 +26,7 @@ const form = document.getElementById('bookForm');
 const table = document.querySelector('#Table tbody');
 let editing = -1;
 
+// WHEN "SUBMIT" RUN THIS
 form.addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -32,7 +34,7 @@ form.addEventListener('submit', function(event) {
     const author = document.getElementById('author').value;
     const year = document.getElementById('year').value;
     const price = document.getElementById('price').value;
-
+    // if there is no book add a book
     if (editing === -1) { 
         const newBook = new Book(title, author, year, price);
         const newRowElement = document.createElement('tr');
@@ -42,6 +44,7 @@ form.addEventListener('submit', function(event) {
 
         table.appendChild(newRowElement);
         books.push(newBook);
+        // if there is a book edit in the form
     } else {
         books[editing].title = title;
         books[editing].author = author;
@@ -50,11 +53,10 @@ form.addEventListener('submit', function(event) {
 
         const updatedRow = document.createElement('tr');
         updatedRow.innerHTML = books[editing].addBook();
-
-        // Replace the old row with the updated row and attach new event listeners
+        // update the table 
         table.replaceChild(updatedRow, table.children[editing]);
         buttoms(updatedRow, books[editing]);
-
+        // resiting the editing 
         editing = -1;
     }
 
@@ -62,19 +64,20 @@ form.addEventListener('submit', function(event) {
     form.querySelector('button[type="submit"]').textContent = 'Add Book';
 });
 
-//  delete buttom and delete buttom
+
 function buttoms(rowElement, book) {
+    // delete buttom
     rowElement.querySelector('.delete-button').addEventListener('click', function() {
         table.removeChild(rowElement);
         books.splice(books.indexOf(book), 1);
     });
-
+    // update buttom
     rowElement.querySelector('.edit-button').addEventListener('click', function() {
         edit(book);
     });
 }
 
-// edit buttom add
+// edit buttom add/ Update
 function edit(book) {
     document.getElementById('title').value = book.title;
     document.getElementById('author').value = book.author;
