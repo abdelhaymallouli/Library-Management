@@ -75,6 +75,8 @@ function setupButtons(Element, book){
     Element.querySelector('.delete-buttom').addEventListener('click', function(){
         table.removeChild(Element);
         books.splice(books.indexOf(book), 1);
+        form.reset();
+        form.querySelector('button[type="submit"]').textContent = 'Add a Book';
     });
 
     // edit buttom
@@ -101,4 +103,41 @@ form.querySelector('button[type="reset"]').addEventListener('click', function(){
 });
 
 
+//  search function 
+const searchInput = document.getElementById('yearSearch');
+const searchBtn = document.getElementById('searchBtn');
+const clearBtn = document.getElementById('clearSearchBtn');
 
+function searchYear() {
+    const search = searchInput.value.trim();
+    const rows = table.getElementsByTagName('tr');
+
+
+    for(let i=0; i < rows.length; i++) {
+        const yearcoll = rows[i].getElementsByTagName('td')[2]; // go to the input of the year 
+        if(yearcoll) {
+            const year = yearcoll.textContent;
+
+            if (search === ''){
+            rows[i].style.display = '';
+            } else if (year === search) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    }
+}
+
+// search buttom 
+searchBtn.addEventListener('click', searchYear);
+
+// clear buttom 
+clearBtn.addEventListener('click', function() {
+        searchInput.value = '';
+
+        const rows = table.getElementsByTagName('tr');
+        for (let i = 0; i < rows.length; i++) {
+            rows[i].style.display = '';
+        }
+});
